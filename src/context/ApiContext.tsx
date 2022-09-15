@@ -5,7 +5,14 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import { IContext, IPost, IComment, IUserList, ICommentList } from '../models/types';
+
+import {
+  IContext,
+  IPost,
+  IComment,
+  IUserList,
+  ICommentList,
+} from '../models/types';
 
 const defaultContext: IContext = {
   posts: undefined,
@@ -28,8 +35,8 @@ export const ApiProvider: React.FC<Props> = ({ children }) => {
 
   useEffect(() => {
     (async () => {
-      const result = await fetch(API_URL + "/posts/");
-      const postsResult = await result.json() as IPost[];
+      const result = await fetch(API_URL + '/posts/');
+      const postsResult = (await result.json()) as IPost[];
 
       setPosts(postsResult);
 
@@ -45,8 +52,8 @@ export const ApiProvider: React.FC<Props> = ({ children }) => {
 
       setUsers(newUsers);
 
-      const commentsResponse = await fetch(API_URL + "/comments/");
-      const commentsResult = await commentsResponse.json() as IComment[];
+      const commentsResponse = await fetch(API_URL + '/comments/');
+      const commentsResult = (await commentsResponse.json()) as IComment[];
 
       const newComments: ICommentList = {};
       for (let i = 0; i < commentsResult.length; i++) {
@@ -56,14 +63,12 @@ export const ApiProvider: React.FC<Props> = ({ children }) => {
         newComments[comment.postId].push(comment);
       }
 
-      setComments(newComments)
+      setComments(newComments);
     })();
   }, []);
 
   return (
-    <ApiContext.Provider
-      value={{ posts, users, comments }}
-    >
+    <ApiContext.Provider value={{ posts, users, comments }}>
       {children}
     </ApiContext.Provider>
   );

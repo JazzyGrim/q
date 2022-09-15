@@ -1,16 +1,27 @@
-import React from "react";
+import React, { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
+import { withLog } from '../lib/withLog';
 
-const Layout: React.FC = () => {
+type Props = {
+  propMessage: string;
+};
 
-  return <>
-    <header>
-      <h1>Posts App!</h1>
-    </header>
-    <Outlet />
-    <footer>Made with  ♥️ by Mateo</footer>
-  </>
-}
+const Layout: React.FC<Props> = props => {
+  const { propMessage } = props;
 
-export default Layout;
+  useEffect(() => {
+    console.log(`${propMessage} Layout`);
+  });
 
+  return (
+    <>
+      <header>
+        <h1>Posts App!</h1>
+      </header>
+      <Outlet />
+      <footer>Made with ♥️ by Mateo</footer>
+    </>
+  );
+};
+
+export default withLog(Layout);

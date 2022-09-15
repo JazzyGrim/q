@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useEffect } from 'react';
+import { withLog } from '../lib/withLog';
 
 type Props = {
+  propMessage: string;
+};
 
-}
+const NotFound: React.FC<Props> = props => {
+  const { propMessage } = props;
 
-const NotFound: React.FC<Props> = () => {
-  return <div className="center">404 - Not Found</div>
-}
+  useEffect(() => {
+    console.log(`${propMessage} Not Found Page`);
+  });
 
-export default NotFound;
+  return <div className='center'>404 - Not Found</div>;
+};
 
-
+export default withLog(NotFound);
